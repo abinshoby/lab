@@ -1,0 +1,24 @@
+sudo apt-get install libatlas-base-dev libatlas-base-dev gfortran build-essential python-dev python-pip numpy scipy matplotlib seaborn scikit-learn tensorflow theano keras pandas h5py jupyter build-essential python-dev python-pip numpy scipy matplotlib seaborn scikit-learn tensorflow theano keras pandas h5py jupyter
+
+
+
+
+
+
+sudo apt-get install libatlas-base-dev gfortran build-essential python-dev python-pip -y
+sudo -H pip install numpy scipy matplotlib seaborn scikit-learn tensorflow theano keras pandas h5py jupyter
+
+
+sudo apt-get install libatlas-base-dev gfortran build-essential python-dev
+sudo apt-get install python-pip
+sudo pip install numpy
+sudo pip install scipy
+sudo pip install matplotlib
+Sudo pip install seaborn
+sudo pip install scikit-learn
+sudo pip install tensorflow
+sudo pip install theano
+sudo pip install keras
+sudo pip install pandas
+sudo pip install h5py
+sudo pip install jupyter

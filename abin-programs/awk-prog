@@ -1,0 +1,54 @@
+user@user-260-p022il:/home/students/abin-programs$ awk '{print ;}' name.txt | awk '/^p/'
+poornima 26
+pratheesh 27
+user@user-260-p022il:/home/students/abin-programs$ awk '{ print $1;}' name.txt | awk '/^p/'
+poornima
+pratheesh
+user@user-260-p022il:/home/students/abin-programs$ awk '{print;}' name.txt | awk '/^p/' | awk '{print $2;}'
+26
+27
+user@user-260-p022il:/home/students/abin-programs$ awk '{print $1;}' name.txt | awk  '/^p/' | awk '/a$/'
+poornima
+user@user-260-p022il:/home/students/abin-programs$ awk '{print $1;}' name.txt | awk '/^p|^a/'
+poornima
+pratheesh
+aneesh
+user@user-260-p022il:/home/students/abin-programs$ awk '{if($2>$40)print $1}' name.txt
+sangeeth
+poornima
+pratheesh
+vikas
+sangeeth
+aneesh
+saju
+saju
+sangeeth
+user@user-260-p022il:/home/students/abin-programs$ awk '{ if( $2> 40) print $1}' name.txt
+saju
+saju
+sangeeth
+user@user-260-p022il:/home/students/abin-programs$ awlk '$1 !~/^p/' name.txt | awk '{print $1}'
+No command 'awlk' found, did you mean:
+ Command 'awk' from package 'original-awk' (universe)
+ Command 'awk' from package 'mawk' (main)
+ Command 'awk' from package 'gawk' (main)
+awlk: command not found
+user@user-260-p022il:/home/students/abin-programs$ awk '$1 !~/^p/' name.txt | awk '{print $1}'
+sangeeth
+vikas
+sangeeth
+aneesh
+saju
+saju
+sangeeth
+
+user@user-260-p022il:/home/students/abin-programs$ awk '{print $1;}' name.txt | awk '/^p|a$/'
+poornima
+pratheesh
+user@user-260-p022il:/home/students/abin-programs$ awk '{ if($2>26)print $1}' name.txt | awk '/^p/'
+pratheesh
+user@user-260-p022il:/home/students/abin-programs$ awk '{print $1}' name.txt | awk '/^[a,e,i,o,u]/'
+aneesh
+user@user-260-p022il:/home/students/abin-programs$ ^C
+user@user-260-p022il:/home/students/abin-programs$ 
+

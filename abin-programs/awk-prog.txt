@@ -1,0 +1,44 @@
+ awk '{print ;}' name.txt | awk '/^p/'
+poornima 26
+pratheesh 27
+
+ awk '{ print $1;}' name.txt | awk '/^p/'
+poornima
+pratheesh
+
+ awk '{print;}' name.txt | awk '/^p/' | awk '{print $2;}'
+26
+27
+
+ awk '{print $1;}' name.txt | awk  '/^p/' | awk '/a$/'
+poornima
+
+ awk '{print $1;}' name.txt | awk '/^p|^a/'
+poornima
+pratheesh
+aneesh
+
+ awk '{ if( $2> 40) print $1}' name.txt
+saju
+saju
+sangeeth
+
+ awk '$1 !~/^p/' name.txt | awk '{print $1}'
+sangeeth
+vikas
+sangeeth
+aneesh
+saju
+saju
+sangeeth
+
+ awk '{print $1;}' name.txt | awk '/^p|a$/'
+poornima
+pratheesh
+
+awk '{ if($2>26)print $1}' name.txt | awk '/^p/'
+pratheesh
+
+awk '{print $1}' name.txt | awk '/^[a,e,i,o,u]/'
+aneesh
+
