@@ -40,18 +40,20 @@ void calculate(int n,int qt){
 	while(i<n){
 		if(q[i][2]!=0&&q[i][1]<=cur_wait){
 			tot_wait+=cur_wait-q[i][1];
+
+			printf("%d:%f\n",q[i][0],tot_wait);
 			if(q[i][2]<qt){
 				
 				cur_wait+=q[i][2];
 				//q[i][1]+=q[i][2];
-				q[i][1]=cur_wait-q[i][2];//m
+				q[i][1]=cur_wait;//-q[i][2];//m
 				q[i][2]=0;
 			}
 			else{	
 					cur_wait+=qt;
 					q[i][2]-=qt;
 					//q[i][1]+=qt;
-					q[i][1]=cur_wait-qt;//m;
+					q[i][1]=cur_wait;//-qt;//m;
 					
 				}
 		}
@@ -78,4 +80,4 @@ void main(){
 	scanf("%d",&qt);
 	calculate(n,qt);
 }
-				
+
