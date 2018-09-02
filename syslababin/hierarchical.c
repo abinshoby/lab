@@ -15,7 +15,10 @@ int insert(hi *f,char path[50]){
 if(root->non<4){
 	if(strcmp(path,"/")==0){
 		root->next[((*root).non)++]=f;
-		printf("\n Element inserted");
+		if(f->type==0)
+			printf("\n Directory created");
+		else
+			printf("\n File created");
 		return 1;
 	}
 }
@@ -32,6 +35,7 @@ for(int i=0;i<strlen(path);i++){
 		continue;
 	}
 	path_split[j][k++]=path[i];
+	path_split[j][k]='\0';
 }
 int len_path=j+1;
 hi *cur=root;
@@ -61,7 +65,10 @@ if(cur->non>=4){
 }
 else{
 	cur->next[(cur->non)++]=f;
-	printf("\n Element inserted");
+	if(f->type==0)
+			printf("\n Directory created");
+	else
+			printf("\n File created");
 	return 1;
 	}
 
@@ -71,7 +78,7 @@ hi* search(char path[50],char name[20],int type){
 if(strcmp(path,"/")==0){
 		for(int i=0;i<root->non;i++){
 			if(strcmp(root->next[i]->name,name)==0&&root->next[i]->type==type){
-				printf("\n found");
+				printf("\n found at /");
 				return root;
 			}
 		}
@@ -82,14 +89,21 @@ char path_split[10][10];
 int j=-1,k=0;
 for(int i=0;i<strlen(path);i++){
 	if(path[i]=='/'){
+		
 		j++;
 		k=0;
 		continue;
 	}
 	
 path_split[j][k++]=path[i];
+path_split[j][k]='\0';
+
+
 
 }
+
+
+
 int len_path=j+1;
 		
 hi *cur=root;
@@ -97,8 +111,9 @@ int f=0;
 hi *found;
 for(int i=0;i<len_path;i++){
 	for(int j=0;j<cur->non;j++){
-		
+		//printf("\n%s",path_split[i]);
 		if(strcmp((cur->next[j])->name,path_split[i])==0&& (cur->next[j])->type==0&&cur->next[j]!=NULL){
+			
 			f=1;
 			found=cur->next[j];
 			break;
@@ -119,7 +134,7 @@ for(int i=0;i<len_path;i++){
 }
 for(int i=0;i<cur->non;i++){
 	if(strcmp(cur->next[i]->name,name)==0&& cur->next[i]->type==type)
-	{	printf("\n found");
+	{	printf("\n found at %s",path);
 		return cur;
 	}
 }
@@ -127,7 +142,7 @@ printf("\n not found");
 return NULL;
 }
 
-int delete(char name[20],char path[50],int type){
+int delete(char path[50],char name[20],int type){
 hi* pos=search(path,name,type);
 if(pos!=NULL){
 	int pp=-1;
@@ -182,16 +197,17 @@ else if(c==3){
 	scanf("%s",name);
 	printf("\n Enter the path of file");
 	scanf("%s",path);
-	delete(name,path,1);
+	delete(path,name,1);
 }
 else if(c==4){
 	printf("\n Enter name of directory");
 	scanf("%s",name);
 	printf("\n Enter the path of directory");
 	scanf("%s",path);
-	delete(name,path,0);
+	delete(path,name,0);
 }
 else if(c==5){
+	fflush(stdin);
 	printf("\n Enter name of file");
 	scanf("%s",name);
 	printf("\n Enter the path of file");
