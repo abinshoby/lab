@@ -1,75 +1,49 @@
 // C++ implementation of FIFO page replacement
 // in Operating Systems.
 #include<bits/stdc++.h>
+
 using namespace std;
  
 // Function to find page faults using FIFO
+// unordered_set<int> s;
+int find_f(int pgno,int queue[20],int noq){
+	for(int i=0;i<noq;i++){
+		if(queue[i]==pgno)
+			return 1;
+	}
+	return -1;
+}
 int pageFaults(int pages[], int n, int capacity)
 {
-    // To represent set of current pages. We use
-    // an unordered_set so that we quickly check
-    // if a page is present in set or not
-    unordered_set<int> s;
- 
-    // To store the pages in FIFO manner
-    queue<int> indexes;
- 
-    // Start from initial page
-    int page_faults = 0;
-    for (int i=0; i<n; i++)
-    {
-        // Check if the set can hold more pages
-        if (s.size() < capacity)
-        {
-            // Insert it into set if not present
-            // already which represents page fault
-            if (s.find(pages[i])==s.end())
-            {
-                s.insert(pages[i]);
- 
-                // increment page fault
-                page_faults++;
- 
-                // Push the current page into the queue
-                indexes.push(pages[i]);
-            }
-        }
- 
-        // If the set is full then need to perform FIFO
-        // i.e. remove the first page of the queue from
-        // set and queue both and insert the current page
-        else
-        {
-            // Check if current page is not already
-            // present in the set
-            if (s.find(pages[i]) == s.end())
-            {
-                //Pop the first page from the queue
-                int val = indexes.front();
- 
-                indexes.pop();
- 
-                // Remove the indexes page
-                s.erase(val);
- 
-                // insert the current page
-                s.insert(pages[i]);
- 
-                // push the current page into
-                // the queue
-                indexes.push(pages[i]);
- 
-                // Increment page faults
-                page_faults++;
-            }
-        }
+   
+        
+    int queue[capacity];
+    int noq=0;
+    int fault=0;
+    int first_used=0;
+    for(int i=0;i<n;i++){
+    	int res=find_f(pages[i],queue,noq);
+    	if(res==-1){
+    		fault++;
+    		if(noq==capacity){
+    			queue[first_used]=pages[i];
+    			first_used=(first_used+1)%capacity;
+    			
+    			
+    		}
+    		else{
+    			queue[noq++]=pages[i];
+    		}
+    		
+    	}
     }
+		
  
-    return page_faults;
+    return fault;
 }
  
 // Driver code
-int main()
+int fifo()
 { int n ;
 int capacity;
     int pages[20] ;// //{7, 0, 1, 2, 0, 3, 0, 4,2, 3, 0, 3, 2};
