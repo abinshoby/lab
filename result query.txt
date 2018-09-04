@@ -1,0 +1,365 @@
+Computation on table data
+question 1
+
+SQL> update Video set dailyRental=dailyRental+0.1*dailyRental
+  2  where category='Fantasy';
+
+1 row updated.
+SQL> select * FROM video
+  2  ;
+
+CATALO TITLE                                    CATEGORY   DAILYRENTAL
+------ ---------------------------------------- ---------- -----------
+     PRICE DIREC
+---------- -----
+207132 Die Another Day                          Action               5
+     21.99 D1001
+
+902355 Harry Potter                             Children           4.5
+      14.5 D7834
+
+330553 Lord of the Rings                        Fantasy            5.5
+     31.99 D4576
+
+
+CATALO TITLE                                    CATEGORY   DAILYRENTAL
+------ ---------------------------------------- ---------- -----------
+     PRICE DIREC
+---------- -----
+781132 Shrek                                    Children             4
+      18.5 D0078
+
+445624 Men in Black II                          Action               4
+     29.99 D5743
+
+634817 Independence Day                         Sci-Fi             4.5
+     32.99 D3765
+
+
+6 rows selected.
+
+
+
+question 2
+
+SQL> select distinct category from Video;
+
+CATEGORY
+----------
+Sci-Fi
+Children
+Action
+Fantasy
+
+question 3
+SQL> select title,dailyRental*3 as ThreeDayRate from Video;
+
+TITLE                                    THREEDAYRATE
+---------------------------------------- ------------
+Die Another Day                                    15
+Harry Potter                                     13.5
+Lord of the Rings                                16.5
+Shrek                                              12
+Men in Black II                                    12
+Independence Day                                 13.5
+
+6 rows selected.
+
+question 4
+
+SQL> select * from Staff
+  2  where salary<50000 and salary>45000;
+
+STAFF NAME
+----- ----------------------------------------
+POSITION                                     SALARY BRAN
+---------------------------------------- ---------- ----
+S1500 Tom Daniels
+Manager                                       46000 B001
+
+S2250 Sally Stern
+Manager                                       48000 B004
+
+queston 5
+SQL> select * from Video
+  2  where category like 'Action' or category like'Children';
+
+CATALO TITLE                                    CATEGORY   DAILYRENTAL
+------ ---------------------------------------- ---------- -----------
+     PRICE DIREC
+---------- -----
+207132 Die Another Day                          Action               5
+     21.99 D1001
+
+902355 Harry Potter                             Children           4.5
+      14.5 D7834
+
+781132 Shrek                                    Children             4
+      18.5 D0078
+
+
+CATALO TITLE                                    CATEGORY   DAILYRENTAL
+------ ---------------------------------------- ---------- -----------
+     PRICE DIREC
+---------- -----
+445624 Men in Black II                          Action               4
+     29.99 D5743
+
+question 6
+
+SQL> select * from Staff
+  2  where name like 'Sally %';
+
+STAFF NAME
+----- ----------------------------------------
+POSITION                                     SALARY BRAN
+---------------------------------------- ---------- ----
+S0003 Sally Adams
+Assistant                                     30000 B001
+
+S2250 Sally Stern
+Manager                                       48000 B004
+
+question 7
+
+SQL> select *  from RentalAgreement
+  2  where dateReturn is null;
+
+no rows selected
+
+question 8
+
+SQL> select position from Staff
+  2  where name like '_o%';
+
+POSITION
+----------------------------------------
+Manager
+Supervisor
+
+question 9
+SQL> select name from Staff
+  2  where position not like 'Manager'
+  3  order by name;
+
+NAME
+----------------------------------------
+Robert Chin
+Sally Adams
+
+question 10
+SQL> select * from Video
+  2  where price>20.00
+  3  order by price;
+
+CATALO TITLE                                    CATEGORY   DAILYRENTAL
+------ ---------------------------------------- ---------- -----------
+     PRICE DIREC
+---------- -----
+207132 Die Another Day                          Action               5
+     21.99 D1001
+
+445624 Men in Black II                          Action               4
+     29.99 D5743
+
+330553 Lord of the Rings                        Fantasy            5.5
+     31.99 D4576
+
+
+CATALO TITLE                                    CATEGORY   DAILYRENTAL
+------ ---------------------------------------- ---------- -----------
+     PRICE DIREC
+---------- -----
+634817 Independence Day                         Sci-Fi             4.5
+     32.99 D3765
+
+question 11
+
+SQL> delete from VideoForRent
+  2  where catalogNo=634817;
+delete from VideoForRent
+*
+ERROR at line 1:
+ORA-02292: integrity constraint (R506.FR2) violated - child record found
+
+Implementation aggregate functions
+Question 1
+
+SQL> select count(*) as totalstaff, sum(salary) as totalsalary
+  2  from Staff
+  3  where salary>40000;
+
+TOTALSTAFF TOTALSALARY
+---------- -----------
+         4      185000
+Question 2
+
+SQL> select min(salary) as MinSalary,max(salary) as MaxSalary
+  2  from Staff;
+
+ MINSALARY  MAXSALARY
+---------- ----------
+     30000      50000
+
+Question 3
+SQL> select avg(price) as AvgPrice
+  2  from Video;
+
+  AVGPRICE
+----------
+24.9933333
+Question 4
+SQL> select count(*)
+  2  from Branch
+  3  where state like 'WA%';
+
+  COUNT(*)
+----------
+         2
+Question 5
+SQL> select count(*)
+  2  from Registration
+  3  where datejoined like '%JUL%';
+
+  COUNT(*)
+----------
+         1
+
+Question 6
+
+SQL> select count(*)
+  2  from video
+  3  where price>20;
+
+  COUNT(*)
+----------
+         4
+
+Implementation of orderby,groupby and having clause
+Question 1
+
+SQL> select branchNo, count(*),sum(salary)
+  2  from Staff
+  3  group by branchNo;
+
+BRAN   COUNT(*) SUM(SALARY)
+---- ---------- -----------
+B003          1       41000
+B002          2       82000
+B004          1       48000
+B001          2       76000
+
+Question 2
+
+SQL> select branchNo,count(*),sum(salar
+  2  from staff
+  3  group by branchno
+  4  having count(*)>1;
+
+BRAN   COUNT(*) SUM(SALARY)
+---- ---------- -----------
+B002          2       82000
+B001          2       76000
+
+question 3
+SQL> select position,count(*),sum(salary)
+  2  from Staff
+  3  where position like 'Manager' or position like 'Supervisor'
+  4  group by position;
+
+POSITION                                   COUNT(*) SUM(SALARY)
+---------------------------------------- ---------- -----------
+Manager                                           4      185000
+Supervisor                                        1       32000
+
+question 4
+SQL> select sum(price)
+  2  from video
+  3  where category like 'Children';
+
+SUM(PRICE)
+----------
+        33
+
+
+question 5
+SQL> select actorNo,count(*)
+  2  from role
+  3  group by actorNo;
+
+ACTOR   COUNT(*)
+----- ----------
+A1002          1
+A2019          2
+A3006          2
+A4343          1
+A7525          1
+implementation of sub query
+question 1
+SQL> select staffNo
+  2  from Staff
+  3  where branchNo like (select branchNo from Branch where street like '8 Jefferson Way');
+
+STAFF
+-----
+S1500
+S0003
+
+question 2
+SQL> select staffNo
+  2  from Staff
+  3  where branchNo in (select distinct  branchNo from Branch where state like 'WA');
+
+STAFF
+-----
+S0010
+S3250
+S2250
+question 3
+
+SQL> select staffNo
+  2  from staff
+  3  where salary>(select avg(salary) from staff);
+
+STAFF
+-----
+S1500
+S0010
+S2250
+
+question 4
+
+SQL> select catalogNo,title,directorName
+  2  from video natural join Director;
+
+CATALO TITLE                                    DIRECTORNAME
+------ ---------------------------------------- ------------------------------
+781132 Shrek                                    Andrew Adamson
+207132 Die Another Day                          Lee Tamahori
+634817 Independence Day                         Roland Emmerick
+330553 Lord of the Rings                        Peter Jackson
+445624 Men in Black II                          Barry Sonnenfeld
+902355 Harry Potter                             Chris Columbus
+
+6 rows selected.
+question 5
+to be done
+
+question 6
+SQL> select actorName
+  2  from Actor
+  3  where actorNo in( select actorNo
+  4                     from Role
+  5                     group by actorno
+  6                     having count(character)>2);
+
+question 7
+
+
+no rows selected
+
+
+
+
+
+
