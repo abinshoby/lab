@@ -57,6 +57,11 @@ void calculate(int n,int qt){
 					
 				}
 		}
+		else if(q[i][1]>cur_wait)
+		{cur_wait++;
+			i--;
+		}
+			
 		i++;
 		if(i==n&&check(n))
 			i=0;
@@ -80,4 +85,3 @@ void main(){
 	scanf("%d",&qt);
 	calculate(n,qt);
 }
-
