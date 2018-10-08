@@ -42,7 +42,7 @@ int pageFaults(int pages[], int n, int capacity)
     return fault;
 }
  
-// Driver code
+
 int fifo()
 { int n ;
 int capacity;

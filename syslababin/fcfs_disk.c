@@ -1,6 +1,6 @@
 #include<stdio.h>
 #include<math.h>
-void main()
+void fcfs()
 {
              int queue[100],n,head,i,j,k,seek=0,diff;
              float avg;

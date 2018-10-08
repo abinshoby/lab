@@ -63,7 +63,7 @@ void lfu(){
 	}
 	printf("\n %d page faults",fault);
 }
-void main(){
+void lfu_call(){
 	printf("\n Enter length of reference string:");
 	scanf("%d",&nr);
 	printf("\n Enter max size of frame");

@@ -76,6 +76,7 @@ int safety(int need[20][10],int allocation[20][10],int m,int n){
 			work[j]=work[j]+allocation[p][j];
 		}
 		finish[p]=1;
+		//printf("%d",p);
 		p=find_satisfying(need,work,finish,m,n);
 		
 	}
@@ -97,7 +98,46 @@ int safety(int need[20][10],int allocation[20][10],int m,int n){
 		return 0;
 	}
 }
-
+int safe_sequence(int need[20][10],int allocation[20][10],int m,int n){
+	int work[10];
+	for(int i=0;i<m;i++)
+		work[i]=available[i];
+	int finish[20];//n
+	for(int i=0;i<n;i++)
+		finish[i]=0;
+	int p=0;
+	p=find_satisfying(need,work,finish,m,n);
+	printf("\n Safe sequence:");
+	while(p!=-1){
+		
+		for(int j=0;j<m;j++){
+		
+			
+			work[j]=work[j]+allocation[p][j];
+		}
+		finish[p]=1;
+		printf("%d\t",p);
+		p=find_satisfying(need,work,finish,m,n);
+		
+	}
+	int f;
+	for(int i=0;i<n;i++){
+		if(finish[i]==0){
+			f=0;
+			break;
+		}
+		else
+			f=1;
+	}
+	if(f==1){
+		printf("\n system is in safe state");
+		return 1;
+	}
+	else{
+		printf("\n system is not in safe state");
+		return 0;
+	}
+}
 void request(int max[20][10],int allocation[20][10],int request[10],int m,int n,int t){
 int f;
 int need[20][10];
@@ -153,8 +193,8 @@ else
 
 void main(){
 	int max[20][10],allocation[20][10],m,n,req[10],no,c=0;
-	while(c!=3){
-		printf("\n 1.Modify the system state 2.Request a resource 3.Exit");
+	while(c!=4){
+		printf("\n 1.Modify the system state 2.Request a resource 3.Find safe sequence 4.Exit");
 		scanf("%d",&c);
 		if(c==1){
 			printf("\n Enter no of different types of  resources and no of processes:");
@@ -182,8 +222,16 @@ void main(){
 				scanf("%d",&req[i]);
 			request(max,allocation,req,m,n,no);
 		}
-		else
-			;
+		else if(c==3){
+			int need[20][10];
+			for(int i=0;i<n;i++){
+				for(int j=0;j<m;j++)
+					need[i][j]=max[i][j]-allocation[i][j];
+				}
+			safe_sequence(need,allocation,m,n);
+			
+		}
+		else;
 	}
 
 

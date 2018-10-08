@@ -13,7 +13,7 @@ int findLRU(int time[], int n){
     return pos;
 }
  
-int main()
+int lru()
 {
     int no_of_frames, no_of_pages, frames[10], pages[30], counter = 0, time[10], flag1, flag2, i, j, pos, faults = 0;
     printf("Enter number of frames: ");
@@ -65,14 +65,14 @@ int main()
             time[pos] = counter;
         }
         
-        printf("\n");
+       // printf("\n");
         
         for(j = 0; j < no_of_frames; ++j){
-            printf("%d\t", frames[j]);
+           // printf("%d\t", frames[j]);
         }
     }
     
-    printf("\n\nTotal Page Faults = %d", faults);
+    printf("\nTotal Page Faults = %d", faults);
     
     return 0;
 }

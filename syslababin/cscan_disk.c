@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
  
-int main()
+int cscan()
 {
       int queue1[30], queue2[30], queue3[30];
       int limit, disk_head, count = 0, j, seek_time = 0, range, diff;

@@ -1,6 +1,6 @@
 
 #include<stdio.h>
-int main()
+int scan()
 {
  int i,j,sum=0,n;
  int d[20];
@@ -16,7 +16,7 @@ int main()
  {
  scanf("%d",&d[i]);
  }
- d[n]=disk;
+ d[n-1]=disk;
  n=n+1;
  for(i=0;i<n;i++)    // sorting disk locations
  {
@@ -30,7 +30,7 @@ int main()
     }
   }
  }
- max=d[n];
+ max=d[n-1];
  for(i=0;i<n;i++)   // to find loc of disc in array
  {
  if(disk==d[i]) { dloc=i; break;  }

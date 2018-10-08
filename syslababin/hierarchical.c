@@ -163,16 +163,37 @@ else
 	printf("\n not deleted");
 }
 
-
+void rename_(char path[50],char name[20],int type){
+hi* pos=search(path,name,type);
+char new[20];
+if(pos!=NULL){
+	int pp=-1;
+	for(int i=0;i<pos->non;i++){
+		if(strcmp(pos->next[i]->name,name)==0){
+			pp=i;
+			printf("\n Enter new name:");
+			scanf("%s",new);
+			strcpy(pos->next[i]->name,new);
+			
+			break;
+		}
+	}
 	
 	
-void main(){
+	printf("\n Rename sucessfull");
+}
+else
+	printf("\n Rename unsucessfull");
+}
+	
+	
+void hierarchy(){
 hi *el;
 root=(hi *)malloc(sizeof(hi));
 int c=-1,type;
 char name[20],path[50];
-while(c!=7){
-printf("\n 1.create a file 2.create a directory 3. delete a file 4.delete a directory 5.search a file 6. search a directory 7. Exit");
+while(c!=9){
+printf("\n 1.create a file 2.create a directory 3. delete a file 4.delete a directory 5.search a file 6. search a directory 7.Rename a file 8.Rename a directory \t9. Exit");
 scanf("%d",&c);
 if(c==1){
 	el=(hi *)malloc(sizeof(hi));
@@ -221,6 +242,21 @@ else if(c==6){
 	scanf("%s",path);
 	search(path,name,0);
 }
+else if(c==7){
+printf("\n Enter name of the file:");
+scanf("%s",name);
+printf("\n Enter the path of file:");
+scanf("%s",path);
+rename_(path,name,1);
+}
+else if(c==8){
+printf("\n Enter name of the Directory:");
+scanf("%s",name);
+printf("\n Enter the path of directory:");
+scanf("%s",path);
+rename_(path,name,0);
+}
+
 }
 }
 
