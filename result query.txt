@@ -343,7 +343,67 @@ CATALO TITLE                                    DIRECTORNAME
 
 6 rows selected.
 question 5
-to be done
+SQL> select t.title,t.directorName,t.actorName,t.character
+  2  from ( select * from (video natural join Director) natural join(Role natural join Actor)) t;
+
+TITLE                                    DIRECTORNAME
+---------------------------------------- ------------------------------
+ACTORNAME
+----------------------------------------
+CHARACTER
+----------------------------------------
+Die Another Day                          Lee Tamahori
+Pierce Brosnan
+James Bond
+
+Harry Potter                             Chris Columbus
+Elijah Wood
+Harry Potter
+
+TITLE                                    DIRECTORNAME
+---------------------------------------- ------------------------------
+ACTORNAME
+----------------------------------------
+CHARACTER
+----------------------------------------
+
+Lord of the Rings                        Peter Jackson
+Elijah Wood
+Frodo Baggins
+
+Men in Black II                          Barry Sonnenfeld
+Will Smith
+
+TITLE                                    DIRECTORNAME
+---------------------------------------- ------------------------------
+ACTORNAME
+----------------------------------------
+CHARACTER
+----------------------------------------
+Agent J
+
+Independence Day                         Roland Emmerick
+Will Smith
+Captain Steve Hiller
+
+Men in Black II                          Barry Sonnenfeld
+
+TITLE                                    DIRECTORNAME
+---------------------------------------- ------------------------------
+ACTORNAME
+----------------------------------------
+CHARACTER
+----------------------------------------
+Tommy Lee Jones
+Agent K
+
+Shrek                                    Andrew Adamson
+Mike Myers
+Shrek
+
+
+7 rows selected.
+
 
 question 6
 SQL> select actorName
@@ -356,10 +416,249 @@ SQL> select actorName
 question 7
 
 
-no rows selected
+SQL> select   *  from VideoForRent natural join video where available like 'Y';
+
+CATALO    VIDEONO A BRAN TITLE                                    CATEGORY
+------ ---------- - ---- ---------------------------------------- ----------
+DAILYRENTAL      PRICE DIREC
+----------- ---------- -----
+207132     199004 Y B001 Die Another Day                          Action
+          5      21.99 D1001
+
+207132     245456 Y B002 Die Another Day                          Action
+          5      21.99 D1001
+
+634817     243431 Y B002 Independence Day                         Sci-Fi
+        4.5      32.99 D3765
+
+
+question 8 
+SQL> select * from (Branch natural join staff) natural join Registration
+  2  where dateJoined LIKE  '%JUN%' or  dateJoined LIKE '%JUL%' or dateJoined LIKE '%AUG%' or  dateJoined LIKE '%SEP%' or
+  3  dateJoined LIKE '%OCT%' or  dateJoined LIKE '%NOV%' or  dateJoined LIKE '%DEC%';
+
+BRAN STAFF STREET                         CITY                 ST ZIPCO MGRST
+---- ----- ------------------------------ -------------------- -- ----- -----
+NAME
+----------------------------------------
+POSITION                                     SALARY MEMBERN DATEJOINE
+---------------------------------------- ---------- ------- ---------
+B002 S3250 City Center Plaza              Seattle              WA 98122 S0010
+Robert Chin
+Supervisor                                    32000 M250178 01-JUL-01
+
+B001 S0003 8 Jefferson Way                Portland             OR 97201 S1500
+Sally Adams
+Assistant                                     30000 M166884 04-SEP-02
+
+BRAN STAFF STREET                         CITY                 ST ZIPCO MGRST
+---- ----- ------------------------------ -------------------- -- ----- -----
+NAME
+----------------------------------------
+POSITION                                     SALARY MEMBERN DATEJOINE
+---------------------------------------- ---------- ------- ---------
+
+B002 S3250 City Center Plaza              Seattle              WA 98122 S0010
+Robert Chin
+Supervisor                                    32000 M284354 09-OCT-01
 
 
 
+Implementation of built in functions
+question 1
+SQL> select * from staff where staffno in (select staffno
+  2  from Registration
+  3  where extract(month from datejoined)=10);
+
+STAFF NAME
+----- ----------------------------------------
+POSITION                                     SALARY BRAN
+---------------------------------------- ---------- ----
+S3250 Robert Chin
+Supervisor                                    32000 B002
+
+
+question 2
+SQL> select memberNo,videoNo,extract(day from datereturn)
+  2  from rentalAgreement;
+
+MEMBERN    VIDEONO EXTRACT(DAYFROMDATERETURN)
+------- ---------- --------------------------
+M284354     245456                          6
+M284354     243431                          6
+M115656     199004                          7
+
+question 3
+SQL> select to_char(datejoined,'MM/DD/YYYY') JOINDATE from Registration;
+
+JOINDATE
+----------
+07/01/2001
+09/04/2002
+05/12/2000
+10/09/2001
+
+question 4
+SQL> select (sysdate+15) from dual;
+
+(SYSDATE+
+---------
+24-OCT-18
+
+
+question 5
+SQL> select numtodsinterval(sysdate-dateReturn,'day') from RentalAgreement;
+
+NUMTODSINTERVAL(SYSDATE-DATERETURN,'DAY')
+---------------------------------------------------------------------------
++000005724 01:35:59.000000000
++000005724 01:35:59.000000000
++000005723 01:35:59.000000000
+
+
+views and indexes
+ question 1
+SQL> create view Roleview as select * From Role;
+
+View created.
+SQL> select * from RoleView;
+
+ACTOR CATALO CHARACTER
+----- ------ ----------------------------------------
+A1002 207132 James Bond
+A3006 330553 Frodo Baggins
+A3006 902355 Harry Potter
+A2019 634817 Captain Steve Hiller
+A2019 445624 Agent J
+A7525 445624 Agent K
+A4343 781132 Shrek
+
+7 rows selected.
+a)SQL> insert into Roleview values('A5454',634817,'Steve');
+
+1 row created.
+b)SQL> delete from Roleview where actorNo like 'A4343';
+
+1 row deleted.
+C)SQL> update RoleView set character='IRONMAN' where ActorNo like 'A7525';
+
+1 row updated.
+
+SQL> SELECT * FROM Roleview;
+
+ACTOR CATALO CHARACTER
+----- ------ ----------------------------------------
+A1002 207132 James Bond
+A3006 330553 Frodo Baggins
+A3006 902355 Harry Potter
+A2019 634817 Captain Steve Hiller
+A2019 445624 Agent J
+A7525 445624 IRONMAN
+A5454 634817 Steve
+
+7 rows selected.
+
+question 2
+SQL> create view Manager as select * from staff where position like 'Manager';
+
+View created.
+
+SQL> select * from manager;
+
+STAFF NAME
+----- ----------------------------------------
+POSITION                                     SALARY BRAN
+---------------------------------------- ---------- ----
+S1500 Tom Daniels
+Manager                                       46000 B001
+
+S0010 Mary Martinez
+Manager                                       50000 B002
+
+S2250 Sally Stern
+Manager                                       48000 B004
+
+
+STAFF NAME
+----- ----------------------------------------
+POSITION                                     SALARY BRAN
+---------------------------------------- ---------- ----
+S0415 Art Peters
+Manager                                       41000 B003
+
+question 3
+SQL> create index branchnos on Branch(branchno);
+create index branchnos on Branch(branchno)
+                                 *
+ERROR at line 1:
+ORA-01408: such column list already indexed
+
+question 4
+SQL> create index act_cat
+  2  on Role(ActorNo,CatalogNo);
+on Role(ActorNo,CatalogNo)
+        *
+ERROR at line 2:
+ORA-01408: such column list already indexed
+
+question 5
+SQL> create unique index sti
+  2  on staff(Name);
+
+Index created.
+
+question 6
+SQL> Drop index branchnos;
+Drop index branchnos
+           *
+ERROR at line 1:
+ORA-01418: specified index does not exist
+
+
+
+Sequences
+
+question 1
+
+SQL> create sequence Dept_Id_seq
+  2  start with 0
+  3  increment by 10
+  4  minvalue 0
+  5  maxvalue 1000
+  6  nocycle;
+
+Sequence created.
+SQL> create table Department(
+  2  Dept_Id number(4),
+  3  Dept_name varchar(20),
+  4  manager_id number(4));
+
+Table created.
+SQL> insert into Department values(Dept_Id_Seq.nextval,'CSE',2);
+
+1 row created.
+SQL> SELECT * FROM  Department;
+
+   DEPT_ID DEPT_NAME            MANAGER_ID
+---------- -------------------- ----------
+        10 CSE                           2
+SQL> insert into Department values(Dept_Id_Seq.nextval,'CIVIL',4);
+
+1 row created.
+
+SQL> SELECT * FROM Department;
+
+   DEPT_ID DEPT_NAME            MANAGER_ID
+---------- -------------------- ----------
+        10 CSE                           2
+        20 CIVIL                         4
+
+
+
+question 2
+SQL> drop sequence Dept_Id_Seq;
+
+Sequence dropped.
 
 
 
