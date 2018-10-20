@@ -15,15 +15,26 @@ dcnt=0;
 while(1)
 {
 printf("\n\n 1. Create Directory\t 2. Create File\t 3. Delete File");
-printf("\n 4. Search File \t \t 5. Display \t 6.Rename file \t7.Rename directory \t 8. Exit \t Enter your choice -- ");
+printf("\n 4. Search File \t \t 5. Display \t 6.Rename file \t7.Rename directory  \t 8. Exit \t Enter your choice -- ");
 scanf("%d",&ch);
 switch(ch)
 {
 case 1: printf("\n Enter name of directory -- ");
-scanf("%s", dir2[dcnt].dname);
+scanf("%s",d);
+int u=0;
+for(i=0;i<dcnt;i++){
+if(strcmp(d,dir2[i].dname)==0){
+printf("\n Directory already exists");
+u=1;
+break;}
+}
+if(u==0){
+//scanf("%s", dir2[dcnt].dname);
+strcpy(dir2[dcnt].dname,d);
 dir2[dcnt].fcnt=0;
 dcnt++;
 printf("Directory created");
+}
 break;
 case 2: printf("\n Enter name of the directory -- ");
 scanf("%s",d);
@@ -31,9 +42,22 @@ for(i=0;i<dcnt;i++)
 if(strcmp(d,dir2[i].dname)==0)
 {
 printf("Enter name of the file -- ");
-scanf("%s",dir2[i].fname[dir2[i].fcnt]);
+scanf("%s",f);
+int e=0;
+for(k=0;k<dir2[i].fcnt;k++)
+{
+if(strcmp(f, dir2[i].fname[k])==0){
+	e=1;
+	break;}
+}
+//scanf("%s",dir2[i].fname[dir2[i].fcnt]);
+if(e==0){
+strcpy(dir2[i].fname[dir2[i].fcnt],f);
 dir2[i].fcnt++;
 printf("File created");
+}
+else
+printf("\n File already exists");
 break;
 }
 if(i==dcnt)
@@ -51,9 +75,13 @@ for(k=0;k<dir2[i].fcnt;k++)
 {
 if(strcmp(f, dir2[i].fname[k])==0)
 {
+char y;
+printf("\n Are you sure to delete this file(y/n)?");
+scanf("%s",&y);
+if(y=='y'){
 printf("File %s is deleted ",f);
 dir2[i].fcnt--;
-strcpy(dir2[i].fname[k],dir2[i].fname[dir2[i].fcnt]);
+strcpy(dir2[i].fname[k],dir2[i].fname[dir2[i].fcnt]);}
 goto jmp;
 }
 }

@@ -21,8 +21,20 @@ scanf("%d",&ch);
 switch(ch)
 {
 case 1: printf("\n Enter the name of the file -- ");
-scanf("%s",dir.fname[dir.fcnt]);
+scanf("%s",f);
+//scanf("%s",dir.fname[dir.fcnt]);
+for(i=0;i<dir.fcnt;i++)
+{
+if(strcmp(f, dir.fname[i])==0)
+{
+printf("File %s already exists! ", f);
+break;
+}
+}
+if(i==dir.fcnt){
+strcpy(dir.fname[dir.fcnt],f);
 dir.fcnt++;
+printf("\n File created.");}
 break;
 case 2: printf("\n Enter the name of the file -- ");
 scanf("%s",f);
@@ -30,15 +42,20 @@ for(i=0;i<dir.fcnt;i++)
 {
 if(strcmp(f, dir.fname[i])==0)
 {
+printf("\n Are you sure to delete this file(y/n)");
+char y;scanf("%s",&y);
+if(y=='y'){
 printf("File %s is deleted ",f);
 strcpy(dir.fname[i],dir.fname[dir.fcnt-1]);
+dir.fcnt--;}
+
 break;
 }
 }
-if(i==dir.fcnt)
+if(i==dir.fcnt+1)
 printf("File %s not found",f);
-else
-dir.fcnt--;
+
+
 break;
 case 3: printf("\n Enter the name of the file -- ");
 scanf("%s",f);
@@ -85,3 +102,4 @@ default: exit(0);
 }
 
 }
+
