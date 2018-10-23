@@ -144,6 +144,18 @@ if(strcmp(f, dir2[i].fname[k])==0)
 printf("File %s is found ",f);
 printf("\n Enter new name of the file:");
 scanf("%s",new);
+//check if exists
+//printf("Enter the name of the file -- ");
+//scanf("%s",f);
+int p;
+for(p=0;p<dir2[i].fcnt;p++)
+{
+if(strcmp(new, dir2[i].fname[p])==0)
+{
+printf("File name already exists ");
+goto jmpl1;
+}
+}
 strcpy(dir2[i].fname[k],new);
 printf("\n file renamed sucessfully");
 goto jmpl1;
@@ -165,9 +177,26 @@ if(strcmp(d,dir2[i].dname)==0)
 	printf("\n Directory found");
 	printf("\n Enter new name:");
 	scanf("%s",new);
+	//check if exists
+	int p;
+	for(p=0;p<dcnt;p++){
+	if(strcmp(new,dir2[p].dname)==0)
+	{
+	printf("\n Directory name already exists!");
+	//printf("\n Enter new name:");
+	//scanf("%s",new);
+
+	//strcpy(dir2[i].dname,new);
+	//printf("\n Directory renamed sucessfully");
+	fl=0;
+	break;
+	}
+	}
+	if(fl!=0){
+	
 	strcpy(dir2[i].dname,new);
 	printf("\n Directory renamed sucessfully");
-	fl=1;
+	fl=1;}
 	break;
 }
 }

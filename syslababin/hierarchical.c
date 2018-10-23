@@ -294,14 +294,21 @@ if(pos!=NULL){
 			pp=i;
 			printf("\n Enter new name:");
 			scanf("%s",new);
+			hi* pos2=search(path,new,type);
+			if(pos2==NULL){
 			strcpy(pos->next[i]->name,new);
+			printf("\n Rename sucessfull");
+			
+			}
+			else
+				{printf("\n The new name already exists!");printf("\n Rename unsucessfull");}
 			
 			break;
 		}
 	}
 	
 	
-	printf("\n Rename sucessfull");
+	
 }
 else
 	printf("\n Rename unsucessfull");

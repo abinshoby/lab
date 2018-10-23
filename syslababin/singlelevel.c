@@ -89,8 +89,25 @@ if(strcmp(f, dir.fname[i])==0)
 printf("File %s is found ", f);
 printf("\n Enter new name:");
 scanf("%s",new);
+
+//check if exists already
+int e=0,p;
+for(p=0;p<dir.fcnt;p++)
+{
+if(strcmp(f, dir.fname[p])==0)
+{
+e=1;
+break;
+}
+}
+if(p==dir.fcnt)
+e=0;
+if(e==1)
+	printf("\n Can't rename the file it already exists!");
+else{
+
 strcpy(dir.fname[i],new);
-printf("\n File renamed successfully");
+printf("\n File renamed successfully");}
 break;
 }
 }
