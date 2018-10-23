@@ -45,7 +45,7 @@ int len_path=j+1;
 		
 hi *cur=root;
 int f=0;
-hi *found;
+hi *found=NULL;
 for(int i=0;i<len_path;i++){
 	for(int j=0;j<cur->non;j++){
 		//printf("\n%s",path_split[i]);
@@ -221,7 +221,7 @@ for(int i=0;i<strlen(path);i++){
 int len_path=j+1;
 hi *cur=root;
 int f1;
-hi *found;
+hi *found=NULL;
 for(int i=0;i<len_path;i++){
 	for(int j=0;j<(*cur).non;j++){
 		if(strcmp((cur->next[j])->name,path_split[i])==0&& cur->next[j]->type==0&&cur->next[j]!=NULL){
@@ -229,8 +229,8 @@ for(int i=0;i<len_path;i++){
 			found=cur->next[j];
 			break;
 		}
-		else
-			f1=0;
+		else{
+			f1=0;}//hhhhhhhhh
 	}
 	if(f1==0){
 		printf("\n Invalid path");

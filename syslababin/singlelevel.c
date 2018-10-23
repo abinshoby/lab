@@ -94,7 +94,7 @@ scanf("%s",new);
 int e=0,p;
 for(p=0;p<dir.fcnt;p++)
 {
-if(strcmp(f, dir.fname[p])==0)
+if(strcmp(new, dir.fname[p])==0)
 {
 e=1;
 break;
