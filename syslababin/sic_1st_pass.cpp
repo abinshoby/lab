@@ -238,7 +238,10 @@ int pass1(int lineno,string label,string opcode,string operand,char argv[]){
 	
 	if(opcode.compare("START")==0){
 			stringstream no(operand);
+			
 			no>>STARTADRESS;
+			
+			STARTADRESS=(int)strtol(operand.c_str(), 0, 16);
 			LOCCTR=STARTADRESS;
 			stringstream ss2;
 			ss2<<hex << LOCCTR; 
