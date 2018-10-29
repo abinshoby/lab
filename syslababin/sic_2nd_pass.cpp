@@ -192,6 +192,22 @@ symtab.close();
 
 int pass2(int lineno,string loc,string opcode,string operand,char argv[]){
 	//do here
+	if(opcode.compare("START")==0){
+	create_header();
+		write_header();
+		//WRITE LISTING LINE
+		init_text_record();
+		return 1;
+	}
+	if(lineno==1){
+		create_header();
+		write_header();
+		init_text_record();
+		return 1;
+	}
+	if(loc.compare(".")!=0)
+	
+	
 
 }
 int main(int *argc,char *argv[]){
