@@ -1,0 +1,4 @@
+ALPHA	c
+FIVE	f
+CHARZ	12
+C1	13
