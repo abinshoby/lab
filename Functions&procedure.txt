@@ -1,0 +1,125 @@
+1)
+
+
+declare
+row_el staff3.name%type;
+ch varchar(1);
+i integer;
+cursor all_staff_name is select name from staff3;
+procedure  display_char (ch varchar2,i integer) is
+begin
+open all_staff_name;
+loop
+fetch all_staff_name into row_el;
+exit when all_staff_name%notfound;
+if substr(row_el,i,1) = ch
+then dbms_output.put_line(row_el);
+end if;
+end loop;
+end;
+
+begin
+ch:='&ch';
+i:=&i;
+display_char(ch,i);
+
+end;
+
+
+2)
+create or replace procedure max_min_price(max in out video3.price%type,min in out video3.price%type)
+   is
+cursor maxc is select max(price) from Video3;
+cursor minc is select min(price) from video3;
+    begin
+	open maxc;
+    	fetch maxc into max;
+	open minc;
+	fetch minc into min;
+   
+    end;
+    declare
+	maxi video3.price%type;
+	mini  video3.price%type;
+    begin
+    max_min_price(maxi,mini);
+	dbms_output.put_line('maximum: '||maxi||' '||'minimum: '||mini);
+    end;
+
+3)create or replace function sum_sal2(branch in staff3.branchNo%type,sums out staff3.salary%type)
+return  staff3.salary%type  is
+cursor sum_sal is select sum(salary) from staff3 where branchNo like branch;
+begin
+
+open sum_sal;
+fetch sum_sal into sums;
+return sums;
+
+end;
+
+
+declare
+branch staff3.branchNo%type;
+sums1 staff3.salary%type;
+begin
+branch:='&branch';
+sums1:=sum_sal2(branch,sums1);
+dbms_output.put_line('sum:'||sums1);
+end;
+
+
+4)create or replace procedure char_roles(name in Actor3.actorName%type) is
+cursor roles is select character from Role3 natural join Actor3 where actorName like name;
+character Role3.character%type;
+begin
+open roles;
+loop
+fetch roles into character;
+exit when roles%notfound;
+dbms_output.put_line(character);
+end loop;
+end;
+
+declare
+name Actor3.actorName%type;
+begin
+name:='&name';
+char_roles(name);
+end;
+
+
+
+
+
+
+
+
+5)create or replace procedure find_ith_max(i integer)
+is
+cursor list is select * from Video3 order by price desc;
+j integer:=0;
+row Video3%rowtype;
+begin
+open list;
+loop
+fetch list into row;
+exit when list%notfound;
+j:=j+1;
+if j=i then
+dbms_output.put_line(row.title);
+end if;
+end loop;
+end;
+
+declare
+i integer;
+begin
+i:=&i;
+find_ith_max(i);
+end;
+
+
+
+
+
+    
