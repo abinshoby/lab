@@ -7,17 +7,16 @@ pthread_mutex_t chopstick[5];
 
 void *func(int n)
    {
-   printf ("Philosopher %d is thinking\n",n);
-
-   //when philosopher 5 is eating he takes fork 1 and fork 5
+  // printf ("Philosopher %d is thinking\n",n+1);
+	printf("Philosopher %d is hungry\n",n+1);
    pthread_mutex_lock(&chopstick[n]);
    pthread_mutex_lock(&chopstick[(n+1)%5]);
-   printf ("Philosopher %d is eating\n",n);
+   printf ("Philosopher %d is eating\n",n+1);
    sleep(3);
    pthread_mutex_unlock(&chopstick[n]);
    pthread_mutex_unlock(&chopstick[(n+1)%5]);
 
-   printf ("Philosopher %d finished eating\n",n);
+   printf ("Philosopher %d is thinking\n",n+1);
 
    return(NULL);
    }
@@ -27,7 +26,8 @@ int main()
    int i;
    for(i=0;i<5;i++)
       pthread_mutex_init(&chopstick[i],NULL);
-
+   for(i=0;i<5;i++)
+	printf ("Philosopher %d is thinking\n",i+1);
    for(i=0;i<5;i++)
       pthread_create(&philosopher[i],NULL,(void *)func,(void *)i);
 
