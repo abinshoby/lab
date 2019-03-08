@@ -11,7 +11,7 @@ void *func(int n)
 	printf("Philosopher %d is hungry\n",n+1);
    pthread_mutex_lock(&chopstick[n]);
    pthread_mutex_lock(&chopstick[(n+1)%5]);
-   printf ("Philosopher %d is eating\n",n+1);
+   printf ("Philosopher %d is eating with chopsticks %d and %d \n",n+1,n+1,(n+1)%5+1 );
    sleep(3);
    pthread_mutex_unlock(&chopstick[n]);
    pthread_mutex_unlock(&chopstick[(n+1)%5]);
